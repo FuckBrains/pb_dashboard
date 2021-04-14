@@ -8,7 +8,7 @@ services:
       environment:
         - SITE_LOGIN={{ site_login }}
         - SITE_PASS={{ site_pass }}
-        - POWER_BI_URL = {{ power_bi_url }}
+        - POWER_BI_URL={{ power_bi_url }}
       restart: always
       networks:
         intranet:
