@@ -5,7 +5,7 @@ upstream {{ app_name }} {
 
 server {
     listen 80;
-        server_name django-serv;
+        server_name flask-serv;
 
     location / {
         proxy_pass http://{{ app_name }};
