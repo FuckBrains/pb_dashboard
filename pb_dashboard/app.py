@@ -2,6 +2,7 @@ from flask import Flask
 from flask_httpauth import HTTPBasicAuth
 from werkzeug.security import generate_password_hash, check_password_hash
 from os import environ
+from flask import render_template
 
 app = Flask(__name__)
 auth = HTTPBasicAuth()
@@ -19,4 +20,5 @@ def verify_password(username, password):
 @app.route('/')
 @auth.login_required
 def hello():
-    return 'Hello'
+
+    return render_template('index.html', power_bi_url=environ.get('POWER_BI_URL'))
