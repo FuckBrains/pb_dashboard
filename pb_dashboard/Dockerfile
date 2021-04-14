@@ -9,4 +9,4 @@ RUN mkdir -p ${CONTAINER_HOME}
 ADD . $CONTAINER_HOME
 WORKDIR $CONTAINER_HOME
 
-RUN poetry install
+RUN poetry install --no-dev
