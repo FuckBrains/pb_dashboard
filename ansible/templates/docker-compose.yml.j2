@@ -1,0 +1,28 @@
+version: "3"
+
+services:    
+    {{ app_name }}:
+      image: {{ app_image }}
+      container_name: {{ app_name }}
+      command: poetry run gunicorn -b :5000 pb_dashboard.app:app
+      restart: always
+      networks:
+        intranet:
+          aliases:
+            - {{ app_name }}
+
+    nginx:
+      image: nginx:latest
+      container_name: nginx
+      restart: always
+      volumes:
+        - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      ports:
+        - 80:80
+      networks:
+        - intranet
+      depends_on:
+        - {{ app_name }}
+
+networks: 
+  intranet:
