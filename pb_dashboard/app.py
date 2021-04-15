@@ -5,6 +5,8 @@ from flask_bootstrap import Bootstrap
 from flask_httpauth import HTTPBasicAuth
 from werkzeug.security import check_password_hash, generate_password_hash
 
+import db
+
 app = Flask(__name__)
 auth = HTTPBasicAuth()
 bootstrap = Bootstrap(app)
@@ -36,4 +38,20 @@ def trafic_data():
 @app.route('/subscription-data/')
 @auth.login_required
 def subscription_data():
-    return render_template('index.html')
+    subs = [
+        {
+            'period': 'Month',
+            'all': db.get_subs_all(),
+            'in_use': db.get_subs_in_use(),
+            'active': '?'
+        },
+        {
+            'period': 'Year',
+            'all': db.get_subs_all(period='year'),
+            'in_use': db.get_subs_in_use(period='year'),
+            'active': '?'
+        },
+    ]
+    num_subs, dates = db.get_subs_graph()
+
+    return render_template('subscription_data.html', subs=subs, num_subs=num_subs, dates=dates)

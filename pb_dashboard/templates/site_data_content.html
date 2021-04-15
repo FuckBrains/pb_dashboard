@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block app_content %}
-<div class="row col-md-2">
+<div class="row">
+<div class="col-md-2">
     <ul class="nav flex-column">
         <li class="nav-item {% if request.url_rule.endpoint == "trafic_data" %}active{% endif %}">
             <a class="nav-link" aria-current="page" href="{{ url_for('trafic_data') }}">Trafic</a>
@@ -10,7 +11,8 @@
         </li>
     </ul>
 </div>
-<div class="row col-md-10">
+<div class="col-md-10">
     {% block data_content %}{% endblock %}
+</div>
 </div>
 {% endblock %}
