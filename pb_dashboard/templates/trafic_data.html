@@ -1,0 +1,8 @@
+{% extends "site_data_content.html" %}
+{% block data_content %}
+    {% if power_bi_url %}
+        <iframe width="1024" height="1060" src="{{ power_bi_url }}" frameborder="0" allowFullScreen="true"></iframe>
+    {% else %}
+        PowerBI frame
+    {% endif %}
+{% endblock %}

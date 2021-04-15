@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block app_content %}
+    <ul class="nav flex-column col-md-2">
+        <li class="nav-item {% if request.url_rule.endpoint == "trafic_data" %}active{% endif %}">
+            <a class="nav-link" aria-current="page" href="{{ url_for('trafic_data') }}">Trafic</a>
+        </li>
+        <li class="nav-item {% if request.url_rule.endpoint == "subscription_data" %}active{% endif %}">
+            <a class="nav-link" href="{{ url_for('subscription_data') }}">Subscriptions</a>
+        </li>
+    </ul>
+    {% block data_content %}{% endblock %}
+{% endblock %}
