@@ -43,15 +43,21 @@ def subscription_data():
             'period': 'Month',
             'all': db.get_subs_all(),
             'in_use': db.get_subs_in_use(),
-            'active': '?'
+            'active': db.get_subs_active()
         },
         {
             'period': 'Year',
             'all': db.get_subs_all(period='year'),
             'in_use': db.get_subs_in_use(period='year'),
-            'active': '?'
+            'active': db.get_subs_active(period='year')
         },
     ]
-    num_subs, dates = db.get_subs_graph()
+    graph_data = db.get_subs_graph()
 
-    return render_template('subscription_data.html', subs=subs, num_subs=num_subs, dates=dates)
+    return render_template('subscription_data.html', subs=subs, graph_data=graph_data)
+
+
+@app.route('/accouns-data/')
+@auth.login_required
+def accounts_data():
+    return render_template('accounts_data.html')

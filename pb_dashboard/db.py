@@ -9,14 +9,33 @@ client = Client(
 )
 
 
-def get_subs_in_use(period='month', ago=0):
+def get_subs_in_use(period='month'):
     q_period = 'month' if period == 'month' else 'year'
     resp = client.execute(
-        """SELECT COUNT(*) FROM orders
-        WHERE period='{period}' AND payed=1 AND updated_at > (NOW() - INTERVAL {ago} {period})
+        """
+        SELECT COUNT(*) FROM (
+        SELECT * FROM subscriptions WHERE end_date>NOW()) AS subs JOIN (
+        SELECT * FROM orders WHERE payed=1 AND orderable_type LIKE '%Subscription') AS ord 
+        ON ord.user_id=subs.user_id
+        WHERE ord.period='{period}'
         """.format(
-            period=q_period,
-            ago=1 + ago,
+            period=q_period
+        )
+    )
+    return resp[0][0]
+
+
+def get_subs_active(period='month'):
+    q_period = 'month' if period == 'month' else 'year'
+    resp = client.execute(
+        """
+        SELECT COUNT(*) FROM (
+        SELECT * FROM subscriptions WHERE status='active') AS subs JOIN (
+        SELECT * FROM orders WHERE payed=1 AND orderable_type LIKE '%Subscription') AS ord 
+        ON ord.user_id=subs.user_id
+        WHERE ord.period='{period}'
+        """.format(
+            period=q_period
         )
     )
     return resp[0][0]
@@ -35,16 +54,16 @@ def get_subs_all(period='month'):
 def get_subs_graph():
     resp = client.execute(
         """
-        SELECT COUNT(*), toMonth(created_at), toYear(created_at) FROM orders
-        WHERE period IS NOT null AND payed=1
+        SELECT SUM(price), toMonth(created_at), toYear(created_at) FROM orders
+        WHERE period IS NOT null AND payed=1 AND currency='usd'
         GROUP BY toMonth(created_at), toYear(created_at) ORDER BY
         toYear(created_at), toMonth(created_at)
         """
     )
-    num_new_subs = []
-    date = []
+    graph = {'x': [], 'y': [], 'type': 'scatter', 'name': 'Income'}
+
     for month_data in resp:
-        _num_new_subs, month, year = month_data
-        num_new_subs.append(_num_new_subs)
-        date.append('{}-{}'.format(year, month))
-    return num_new_subs, date
+        income, month, year = month_data
+        graph['y'].append(income)
+        graph['x'].append('{}-{}'.format(year, month))
+    return [graph]

@@ -30,19 +30,22 @@
 <div class="row">
     <div class="chart" id="line">
     <script>
-        var trace1 = {
-            x: {{ dates | safe }},
-            y: {{ num_subs }},
-            type: 'scatter',
-            name: 'Red'
-        };
-
-        var data = [trace1];
         var layout = {
-            showlegend: false
+            title: "Income from new usd sudscriptions.",
+            showlegend: false,
+            xaxis: {
+                title: {
+                    text: 'Date'
+                },
+            },
+            yaxis: {
+                title: {
+                text: 'Income in usd'
+                }
+            }
         };
 
-        Plotly.newPlot('line', data, layout, {displayModeBar: false, scrollZoom: true});
+        Plotly.newPlot('line', {{ graph_data | safe }}, layout, {displayModeBar: false, scrollZoom: true});
     </script>
     </div>
 </div>
