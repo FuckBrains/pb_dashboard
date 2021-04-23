@@ -9,4 +9,4 @@ WORKDIR $CONTAINER_HOME
 
 RUN pip install -r requirements.txt
 
-EXPOSE 8000
+EXPOSE 80

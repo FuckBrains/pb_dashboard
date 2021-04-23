@@ -13,7 +13,7 @@ services:
         - CH_DB={{ ch_db }}
         - CH_USER={{ ch_user }}
         - CH_PASS={{ ch_pass }}
-        - DB_API_ENDPOINT=http://{{ db_api_name }}:8000/{}/{}
+        - DB_API_ENDPOINT=http://{{ db_api_name }}/{}/{}
       restart: always
       networks:
         intranet:
@@ -36,7 +36,7 @@ services:
     {{ db_api_name }}:
       image: {{ db_api_image }}
       container_name: {{ db_api_name }}
-      command: uvicorn pb_db_api.main:app --reload
+      command: uvicorn pb_db_api.main:app --host 0.0.0.0 --port 80 --reload
       environment:
         - DB=db
         - DB_PASSWORD="{{ db_password }}"
@@ -62,7 +62,7 @@ services:
       container_name: {{ parser_name }}
       command: python -m pb_parsers.main
       environment:
-        - DB_API_ENDPOINT=http://{{ db_api_name }}:8000/{}/{}
+        - DB_API_ENDPOINT=http://{{ db_api_name }}/{}/{}
         - DRIVER_URL={{ driver_url }}
         - CREATIVE_MARKET_USERNAME={{ creative_market_username }}
         - CREATIVE_MARKET_PASSWORD={{ creative_market_password }}
