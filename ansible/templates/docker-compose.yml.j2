@@ -36,7 +36,20 @@ services:
     {{ db_api_name }}:
       image: {{ db_api_image }}
       container_name: {{ db_api_name }}
-      command: make run
+      command: poetry run uvicorn pb_db_api.main:app --reload
+      environment:
+        - DB=db
+        - DB_PASSWORD="{{ db_password }}"
+      restart: always
+      depends_on:
+        - migrations
+      networks:
+        - intranet
+
+    migrations:
+      image: {{ db_api_image }}
+      container_name: {{ db_api_name }}
+      command: poetry run alembic upgrade head
       environment:
         - DB=db
         - DB_PASSWORD="{{ db_password }}"
@@ -48,13 +61,15 @@ services:
     {{ parser_name }}:
       image: {{ parser_image }}
       container_name: {{ parser_name }}
-      command: make run
+      command: poetry run python pb_parsers/main.py
       environment:
         - DB_API_ENDPOINT="{{ db_api_name }}/{}/{}"
         - DRIVER_URL={{ driver_url }}
         - CREATIVE_MARKET_USERNAME={{ creative_market_username }}
         - CREATIVE_MARKET_PASSWORD={{ creative_market_password }}
       restart: always
+      depends_on:
+        - {{ db_api_name }}
       networks:
         - intranet
 
