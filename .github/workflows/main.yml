@@ -25,7 +25,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ github.token }}
           registry: docker.pkg.github.com
-          repository:   ${{ github.repository }}/pb_db_api
+          repository:   ${{ github.repository }}/pb_dashboard
           path: pb_db_api
           tags: latest
       
@@ -35,7 +35,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ github.token }}
           registry: docker.pkg.github.com
-          repository:   ${{ github.repository }}/pb_parser
+          repository:   ${{ github.repository }}/pb_dashboard
           path: pb_parser
           tags: latest
     
