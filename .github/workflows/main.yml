@@ -18,6 +18,27 @@ jobs:
           repository:   ${{ github.repository }}/pb_dashboard
           path: pb_dashboard
           tags: latest
+      
+      - name: Build db_api image
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+          registry: docker.pkg.github.com
+          repository:   ${{ github.repository }}/pb_db_api
+          path: pb_db_api
+          tags: latest
+      
+      - name: Build parsers image
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+          registry: docker.pkg.github.com
+          repository:   ${{ github.repository }}/pb_parser
+          path: pb_parser
+          tags: latest
+    
   
   run-ansible:
     name: Run ansible
@@ -38,6 +59,8 @@ jobs:
       - name: Set and run ansible
         env:
           ANSIBLE_VAULT_PASSWORD: ${{ secrets.ANSIBLE_VAULT_PASSWORD }}
+          ANSIBLE_VAULT_FILE: ansible/vars.yml
+          ANSIBLE_VAULT: ${{ secrets.ANSIBLE_VAULT }}
           ANSIBLE_INVENTORY: ${{ secrets.ANSIBLE_INVENTORY }}
           SSH_KEY: ${{ secrets.SSH_KEY }}
           ANSIBLE_PRIVATE_KEY_FILE: ansible/.ssh/ans_key
@@ -50,6 +73,7 @@ jobs:
           GH_REGISTRY: docker.pkg.github.com
         run: |
           echo "$ANSIBLE_VAULT_PASSWORD" > $ANSIBLE_VAULT_PASSWORD_FILE
+          echo "$ANSIBLE_VAULT" > $ANSIBLE_VAULT_FILE
           mkdir ansible/.ssh
           echo "$SSH_KEY" > $ANSIBLE_PRIVATE_KEY_FILE
           chmod 600 $ANSIBLE_PRIVATE_KEY_FILE

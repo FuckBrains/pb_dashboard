@@ -5,3 +5,5 @@ __pycache__
 .python-version
 ansible/.DS_Store
 pb_dashboard/.evn
+ansible/vars.yml
+*foo.db

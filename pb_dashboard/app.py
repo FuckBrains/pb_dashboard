@@ -60,4 +60,5 @@ def subscription_data():
 @app.route('/accouns-data/')
 @auth.login_required
 def accounts_data():
-    return render_template('accounts_data.html')
+    balances = db.get_market_last_balances()
+    return render_template('accounts_data.html', balances=balances)
