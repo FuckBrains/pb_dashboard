@@ -10,3 +10,5 @@ ADD . $CONTAINER_HOME
 WORKDIR $CONTAINER_HOME
 
 RUN poetry install --no-dev
+
+EXPOSE 8000
