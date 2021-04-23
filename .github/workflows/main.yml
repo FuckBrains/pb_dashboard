@@ -18,6 +18,26 @@ jobs:
           repository:   ${{ github.repository }}/pb_dashboard
           path: pb_dashboard
           tags: latest
+      
+      - name: Build db_api image
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+          registry: docker.pkg.github.com
+          repository:   ${{ github.repository }}/pb_dashboard
+          path: pb_db_api
+          tags: latest
+      
+      - name: Build parsers image
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+          registry: docker.pkg.github.com
+          repository:   ${{ github.repository }}/pb_dashboard
+          path: pb_parser
+          tags: latest
     
   
   run-ansible:
