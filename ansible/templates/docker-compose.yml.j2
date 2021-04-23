@@ -13,7 +13,7 @@ services:
         - CH_DB={{ ch_db }}
         - CH_USER={{ ch_user }}
         - CH_PASS={{ ch_pass }}
-        - DB_API_ENDPOINT=""{{ db_api_name }}:8000/{}/{}""
+        - DB_API_ENDPOINT="{{ db_api_name }}:8000/{}/{}"
       restart: always
       networks:
         intranet:
