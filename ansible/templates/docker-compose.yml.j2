@@ -4,7 +4,7 @@ services:
     {{ app_name }}:
       image: {{ app_image }}
       container_name: {{ app_name }}
-      command: poetry run gunicorn -b :5000 app:app
+      command: gunicorn -b :5000 app:app
       environment:
         - SITE_LOGIN={{ site_login }}
         - SITE_PASS={{ site_pass }}
@@ -36,7 +36,7 @@ services:
     {{ db_api_name }}:
       image: {{ db_api_image }}
       container_name: {{ db_api_name }}
-      command: poetry run uvicorn pb_db_api.main:app --reload
+      command: uvicorn pb_db_api.main:app --reload
       environment:
         - DB=db
         - DB_PASSWORD="{{ db_password }}"
@@ -60,7 +60,7 @@ services:
     {{ parser_name }}:
       image: {{ parser_image }}
       container_name: {{ parser_name }}
-      command: poetry run python pb_parsers/main.py
+      command: python pb_parsers/main.py
       environment:
         - DB_API_ENDPOINT=http://{{ db_api_name }}:8000/{}/{}
         - DRIVER_URL={{ driver_url }}
