@@ -60,7 +60,7 @@ services:
     {{ parser_name }}:
       image: {{ parser_image }}
       container_name: {{ parser_name }}
-      command: python pb_parsers/main.py
+      command: python -m pb_parsers.main
       environment:
         - DB_API_ENDPOINT=http://{{ db_api_name }}:8000/{}/{}
         - DRIVER_URL={{ driver_url }}
