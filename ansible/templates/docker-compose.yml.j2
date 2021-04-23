@@ -48,12 +48,11 @@ services:
 
     migrations:
       image: {{ db_api_image }}
-      container_name: {{ db_api_name }}
+      container_name: migrations
       command: poetry run alembic upgrade head
       environment:
         - DB=db
         - DB_PASSWORD="{{ db_password }}"
-      restart: always
       networks:
         - intranet
 
