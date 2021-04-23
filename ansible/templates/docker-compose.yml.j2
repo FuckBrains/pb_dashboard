@@ -13,7 +13,7 @@ services:
         - CH_DB={{ ch_db }}
         - CH_USER={{ ch_user }}
         - CH_PASS={{ ch_pass }}
-        - DB_API_ENDPOINT={{ db_api_name }}/{}/{}
+        - DB_API_ENDPOINT={{ db_api_name }}:8000/{}/{}
       restart: always
       networks:
         intranet:
@@ -62,7 +62,7 @@ services:
       container_name: {{ parser_name }}
       command: poetry run python pb_parsers/main.py
       environment:
-        - DB_API_ENDPOINT={{ db_api_name }}/{}/{}
+        - DB_API_ENDPOINT={{ db_api_name }}:8000/{}/{}
         - DRIVER_URL={{ driver_url }}
         - CREATIVE_MARKET_USERNAME={{ creative_market_username }}
         - CREATIVE_MARKET_PASSWORD={{ creative_market_password }}
