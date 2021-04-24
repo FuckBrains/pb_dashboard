@@ -63,6 +63,8 @@ def get_elements_ballance(username: str, password: str) -> int:
     soup = BeautifulSoup(driver.page_source, 'lxml')
     driver.close()
     ballance = soup.find(
+        'div', attrs={'class': re.compile(r".*TotalEarnings__totalPayout.*")}
+    ).find(
         'div', attrs={'class': re.compile(r"^TotalEarnings__heading.*")}
     ).text.strip()
     ballance_nums = re.findall(r'\d', ballance)[:-2]
