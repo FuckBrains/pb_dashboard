@@ -23,7 +23,7 @@ def creative_balance():
 
 def elements_balance():
     out_schema = schemas.MarketBalanceMake(
-        name=CREATIVE_MARKET_NAME,
+        name=ELEMENTS_NAME,
         balance=parsers.get_elements_ballance(ELEMENTS_USERNAME, ELEMENTS_PASSWORD)
     )
     requests.post(DB_API_ENDPOINT.format('balance', 'make'), out_schema.json())
