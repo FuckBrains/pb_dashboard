@@ -61,4 +61,7 @@ def subscription_data():
 @auth.login_required
 def accounts_data():
     balances = db.get_market_last_balances()
-    return render_template('accounts_data.html', balances=balances)
+    sum_of_money = 0
+    for market in balances.markets:
+        sum_of_money += market.balances[0].balance
+    return render_template('accounts_data.html', balances=balances, sum_of_money=sum_of_money)

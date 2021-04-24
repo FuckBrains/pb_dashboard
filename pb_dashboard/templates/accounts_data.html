@@ -2,7 +2,8 @@
 {% block data_content %}
         <div class="col-md-3">
             <ul class="list-group">
-                <li class="list-group-item active" aria-current="true">Account</li>
+                <li class="list-group-item active" aria-current="true">Account
+                 <span class="badge bg-success rounded-pill">{{ sum_of_money }}</span></li>
             {% for market in balances.markets %}
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     {{ market.display_name }}
