@@ -6,17 +6,18 @@ from typing import List, Optional
 from pydantic import BaseModel
 
 
-class MarketBalanceBase(BaseModel):
+class Market(BaseModel):
     """Market balance model."""
     name: str
+    display_name: Optional[str]
 
 
-class MarketBalanceMake(MarketBalanceBase):
+class MarketBalanceMake(Market):
 
     balance: int
 
 
-class MarketBalanceGet(MarketBalanceBase):
+class MarketBalanceGet(Market):
 
     start: Optional[datetime]
     end: Optional[datetime]
@@ -28,6 +29,6 @@ class MarketBalanceData(BaseModel):
     create_at: datetime
 
 
-class MarketBalanceOut(MarketBalanceBase):
+class MarketBalanceOut(Market):
 
     balances: List[MarketBalanceData]

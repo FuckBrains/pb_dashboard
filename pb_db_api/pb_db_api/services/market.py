@@ -18,6 +18,7 @@ def get(
         out_markets_schema.names.append(
             schemas.Market(
                 name=market.name,
+                display_name=market.display_name,
             )
         )
     return out_markets_schema

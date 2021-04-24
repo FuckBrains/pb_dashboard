@@ -28,6 +28,7 @@ def get(
 
     out_balance_schema = schemas.MarketBalanceOut(
         name=market.name,
+        display_name=market.display_name,
         balances=[],
     )
     for _balance in balances:
@@ -50,9 +51,11 @@ def make(
     ).first()
     if not market:
         market = models.DesignMarket(
-            name=req_body.name
+            name=req_body.name,
+            display_name=req_body.display_name,
         )
         db.add(market)
+    market.display_name = req_body.display_name
     _balance: models.DesignMarketBalance = models.DesignMarketBalance(
         design_market=market,
         balance=req_body.balance
@@ -66,6 +69,7 @@ def make(
     )
     out_balance_schema = schemas.MarketBalanceOut(
         name=market.name,
+        display_name=market.display_name,
         balances=[out_balance],
     )
     return out_balance_schema

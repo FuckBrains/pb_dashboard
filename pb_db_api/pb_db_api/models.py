@@ -15,6 +15,7 @@ class DesignMarket(Base):
     id = Column(Integer, primary_key=True)
 
     name = Column(Text, unique=True)
+    display_name = Column(Text)
     balances = relationship('DesignMarketBalance', back_populates='design_market')
 
 

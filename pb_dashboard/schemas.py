@@ -16,6 +16,7 @@ class Command(BaseModel):
 class Market(BaseModel):
     """Market balance model."""
     name: str
+    display_name: Optional[str]
 
 
 class Markets(BaseModel):
