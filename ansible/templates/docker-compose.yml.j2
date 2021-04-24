@@ -75,6 +75,8 @@ services:
         - ELEMENTS_PASSWORD={{ elements_password }}
         - FREEPIK_USERNAME={{ freepik_username }}
         - FREEPIK_PASSWORD={{ freepik_password }}
+        - ADOBE_USERNAME={{ adobe_username }}
+        - ADOBE_PASSWORD={{ adobe_password }}
       restart: always
       depends_on:
         - {{ db_api_name }}

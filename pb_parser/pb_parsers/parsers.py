@@ -87,3 +87,33 @@ def get_freepik_ballance(driver: webdriver.Remote, username: str, password: str)
     ).text
     ballance_nums = re.findall(r'\d', ballance)
     return int(''.join(ballance_nums))
+
+
+def get_adobe_ballance(driver: webdriver.Remote, username: str, password: str) -> int:
+    driver.get('https://contributor.stock.adobe.com/ru/')
+    sing_in = WebDriverWait(driver, timeout=20).until(
+        lambda d: d.find_element_by_xpath("//a[@data-t='header-signin-button']")
+    )
+    sing_in.click()
+    input_username = WebDriverWait(driver, timeout=20).until(
+        lambda d: d.find_element_by_xpath("//input[@name='username']")
+    )
+    input_username.send_keys(username)
+    next_btn = driver.find_element_by_xpath("//button[@data-id='EmailPage-ContinueButton']")
+    next_btn.click()
+    input_pass = WebDriverWait(driver, timeout=20).until(
+        lambda d: d.find_element_by_xpath("//input[@name='password']")
+    )
+    input_pass.send_keys(password)
+    next_btn = driver.find_element_by_xpath("//button[@data-id='PasswordPage-ContinueButton']")
+    next_btn.click()
+    WebDriverWait(driver, timeout=120).until(
+        lambda d: d.find_element_by_xpath("//span[@data-t='portfolio-tab']")
+    )
+    soup = BeautifulSoup(driver.page_source, 'lxml')
+    driver.delete_all_cookies()
+    ballance = soup.find(
+        'span', attrs={'data-t': 'user-dashboard-overview-link-cashout-available'}
+    ).text.replace(r'\xa0', '')
+    ballance_nums = re.findall(r'\d', ballance)
+    return int(''.join(ballance_nums[:-2]))

@@ -11,13 +11,14 @@ def main():
     renew.creative_balance(driver)
     renew.elements_balance(driver)
     renew.freepik_balance(driver, eurusd)
+    renew.adobe_balance(driver)
     driver.close()
 
 
 while True:
     try:
         main()
-    except:
+    except Exception:
         err_msg = 'pb_dashboard:{}'.format(traceback.format_exc())
         requests.post(
             'https://api.telegram.org/bot{token}/sendMessage?chat_id={tui}&text={text}'.format(

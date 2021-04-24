@@ -25,6 +25,11 @@ FREEPIK_DISPLAY_NAME = 'freepik.com'
 FREEPIK_USERNAME = environ.get('FREEPIK_USERNAME') or ''
 FREEPIK_PASSWORD = environ.get('FREEPIK_PASSWORD') or ''
 
+ADOBE_NAME = 'stock.adobe.com'
+ADOBE_DISPLAY_NAME = 'stock.adobe.com'
+ADOBE_USERNAME = environ.get('ADOBE_USERNAME') or ''
+ADOBE_PASSWORD = environ.get('ADOBE_PASSWORD') or ''
+
 
 def creative_balance(driver: webdriver.Remote):
     out_schema = schemas.MarketBalanceMake(
@@ -61,5 +66,14 @@ def freepik_balance(driver: webdriver.Remote, eurusd: float):
         balance=int(
             eurusd * parsers.get_freepik_ballance(driver, FREEPIK_USERNAME, FREEPIK_PASSWORD)
         )
+    )
+    requests.post(DB_API_ENDPOINT.format('balance', 'make'), out_schema.json())
+
+
+def adobe_balance(driver: webdriver.Remote):
+    out_schema = schemas.MarketBalanceMake(
+        name=ADOBE_NAME,
+        display_name=ADOBE_DISPLAY_NAME,
+        balance=parsers.get_adobe_ballance(driver, ADOBE_USERNAME, ADOBE_PASSWORD)
     )
     requests.post(DB_API_ENDPOINT.format('balance', 'make'), out_schema.json())
