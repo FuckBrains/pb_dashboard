@@ -2,6 +2,7 @@ from pb_parsers import renew, parsers, browser
 from time import sleep
 import requests
 from os import environ
+import traceback
 
 
 def main():
@@ -15,8 +16,8 @@ def main():
 while True:
     try:
         main()
-    except Exception as e:
-        err_msg = 'pb_dashboard:{}'.format(e.__traceback__)
+    except:
+        err_msg = 'pb_dashboard:{}'.format(traceback.format_exc())
         requests.post(
             'https://api.telegram.org/bot{token}/sendMessage?chat_id={tui}&text={text}'.format(
                 token=environ.get('ALLERT_BOT_TOKEN'),
