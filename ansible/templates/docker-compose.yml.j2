@@ -62,8 +62,8 @@ services:
       container_name: {{ parser_name }}
       command: python -m pb_parsers.main
       environment:
-        - ALLERT_BOT_TOKEN = {{ allert_bot_token }}
-        - ADMIN_TUI = {{ admin_tui }}
+        - ALLERT_BOT_TOKEN={{ allert_bot_token }}
+        - ADMIN_TUI={{ admin_tui }}
         - DB_API_ENDPOINT=http://{{ db_api_name }}/{}/{}
         - DRIVER_URL={{ driver_url }}
         - AC_KEY={{ ac_key }}
