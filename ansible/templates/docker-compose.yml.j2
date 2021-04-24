@@ -56,33 +56,6 @@ services:
       networks:
         - intranet
 
-
-    {{ parser_name }}:
-      image: {{ parser_image }}
-      container_name: {{ parser_name }}
-      command: python -m pb_parsers.main
-      environment:
-        - ALLERT_BOT_TOKEN={{ allert_bot_token }}
-        - ADMIN_TUI={{ admin_tui }}
-        - DB_API_ENDPOINT=http://{{ db_api_name }}/{}/{}
-        - DRIVER_URL={{ driver_url }}
-        - AC_KEY={{ ac_key }}
-        - CREATIVE_MARKET_USERNAME={{ creative_market_username }}
-        - CREATIVE_MARKET_PASSWORD={{ creative_market_password }}
-        - CREATIVE_MARKET_SQUAD_USERNAME={{ creative_market_squad_username }}
-        - CREATIVE_MARKET_SQUAD_PASSWORD={{ creative_market_squad_password }}
-        - ELEMENTS_USERNAME={{ elements_username }}
-        - ELEMENTS_PASSWORD={{ elements_password }}
-        - FREEPIK_USERNAME={{ freepik_username }}
-        - FREEPIK_PASSWORD={{ freepik_password }}
-        - ADOBE_USERNAME={{ adobe_username }}
-        - ADOBE_PASSWORD={{ adobe_password }}
-      restart: always
-      depends_on:
-        - {{ db_api_name }}
-      networks:
-        - intranet
-
     db:
       image: postgres:latest
       environment:
