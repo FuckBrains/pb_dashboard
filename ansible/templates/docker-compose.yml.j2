@@ -66,6 +66,8 @@ services:
         - DRIVER_URL={{ driver_url }}
         - CREATIVE_MARKET_USERNAME={{ creative_market_username }}
         - CREATIVE_MARKET_PASSWORD={{ creative_market_password }}
+        - ELEMENTS_USERNAME={{ elements_username }}
+        - ELEMENTS_PASSWORD={{ elements_password }}
       restart: always
       depends_on:
         - {{ db_api_name }}
