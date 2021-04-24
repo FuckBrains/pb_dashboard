@@ -80,6 +80,7 @@ def get_market_last_balances():
         requests.post(DB_API_ENDPOINT.format('market', 'get'), req_data.json()).text
     )
     market_balances = schemas.MarketBalanceList()
+    print(markets)
     for market in markets.names:
         req_data = schemas.MarketBalanceGet(
             name=market.name
@@ -91,5 +92,5 @@ def get_market_last_balances():
                 ).text
             )
         )
-
+    print(market_balances)
     return market_balances
