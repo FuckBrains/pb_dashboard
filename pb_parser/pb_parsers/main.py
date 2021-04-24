@@ -11,6 +11,7 @@ def main():
     renew.creative_balance(driver)
     renew.elements_balance(driver)
     renew.freepik_balance(driver, eurusd)
+    driver.close()
 
 
 while True:
