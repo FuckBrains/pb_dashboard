@@ -2,6 +2,7 @@ from selenium import webdriver
 from time import sleep
 import json
 from os import environ
+from os import path
 
 
 def get() -> webdriver.Remote:
@@ -11,7 +12,7 @@ def get() -> webdriver.Remote:
             'enableVideo': False,
         }
     browser_options = webdriver.chrome.options.Options()
-    browser_options.add_extension('anticaptcha.crx')
+    browser_options.add_extension(path.join('pb_parsers', 'anticaptcha.crx'))
     driver = webdriver.Remote(
             command_executor=environ.get('DRIVER_URL'),
             desired_capabilities=capabilities,
