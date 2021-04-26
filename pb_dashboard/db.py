@@ -42,7 +42,7 @@ def get_average_life(period='month'):
             period=q_period
         )
     )
-    return resp[0][0]
+    return int(resp[0][0])
 
 
 def get_subs_active(period='month'):
