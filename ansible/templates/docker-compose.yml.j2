@@ -13,7 +13,6 @@ services:
         - CH_DB={{ ch_db }}
         - CH_USER={{ ch_user }}
         - CH_PASS={{ ch_pass }}
-        - DB_API_ENDPOINT=http://{{ db_api_name }}/{}/{}
       restart: always
       networks:
         intranet:
@@ -33,38 +32,6 @@ services:
       depends_on:
         - {{ app_name }}
 
-    {{ db_api_name }}:
-      image: {{ db_api_image }}
-      container_name: {{ db_api_name }}
-      command: uvicorn pb_db_api.main:app --host 0.0.0.0 --port 80 --reload
-      environment:
-        - DB=db
-        - DB_PASSWORD="{{ db_password }}"
-      restart: always
-      depends_on:
-        - migrations
-      networks:
-        - intranet
-
-    migrations:
-      image: {{ db_api_image }}
-      container_name: migrations
-      command: alembic upgrade head
-      environment:
-        - DB=db
-        - DB_PASSWORD="{{ db_password }}"
-      networks:
-        - intranet
-
-    db:
-      image: postgres:latest
-      environment:
-          - POSTGRES_PASSWORD="{{ db_password }}"
-      volumes:
-        - ./db_data/:/var/lib/postgresql/data
-      networks:
-        - intranet
-      restart: always
 
 networks: 
   intranet:
