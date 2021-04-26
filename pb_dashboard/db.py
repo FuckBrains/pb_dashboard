@@ -28,6 +28,23 @@ def get_subs_in_use(period='month'):
     return resp[0][0]
 
 
+def get_average_life(period='month'):
+    q_period = 'month' if period == 'month' else 'year'
+    resp = client.execute(
+        """
+        SELECT AVG(dateDiff('day', subs.start_date, subs.end_date)) FROM (
+        SELECT * FROM subscriptions WHERE subscription_id != '') AS subs JOIN (
+        SELECT * FROM orders
+        WHERE payed=1 AND orderable_type LIKE '%Subscription' AND user_id != -1) AS ord
+        ON ord.user_id=subs.user_id
+        WHERE ord.period='{period}'
+        """.format(
+            period=q_period
+        )
+    )
+    return resp[0][0]
+
+
 def get_subs_active(period='month'):
     q_period = 'month' if period == 'month' else 'year'
     resp = client.execute(

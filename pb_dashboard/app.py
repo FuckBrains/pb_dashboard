@@ -43,13 +43,15 @@ def subscription_data():
             'period': 'Month',
             'all': db.get_subs_all(),
             'in_use': db.get_subs_in_use(),
-            'active': db.get_subs_active()
+            'active': db.get_subs_active(),
+            'average_life': db.get_average_life(),
         },
         {
             'period': 'Year',
             'all': db.get_subs_all(period='year'),
             'in_use': db.get_subs_in_use(period='year'),
-            'active': db.get_subs_active(period='year')
+            'active': db.get_subs_active(period='year'),
+            'average_life': db.get_average_life(period='year'),
         },
     ]
     graph_data = db.get_subs_graph()
